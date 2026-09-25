@@ -27,7 +27,9 @@ The program displays a random text passage and measures your typing speed in **W
 ```text
 TYPING-SPEED-TEST/
 │
-├── main.py
+├── TYPING-SPEED-TEST/
+│
+├── WPM_Typing_Test.py
 ├── text.txt
 └── README.md
 ```
