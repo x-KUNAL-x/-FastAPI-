@@ -1,77 +1,205 @@
-# -FastAPI-
+# ⌨️ TYPING SPEED TEST
 
-Recap¶
-In summary, you declare once the types of parameters, body, etc. as function parameters.
+A simple **terminal-based typing speed test** built with Python using the `curses` library.
 
-You do that with standard modern Python types.
+The program displays a random text passage and measures your typing speed in **Words Per Minute (WPM)** while showing incorrect characters in red and correct characters in green.
 
-You don't have to learn a new syntax, the methods or classes of a specific library, etc.
+## ✨ Features
 
-Just standard Python.
+* ⌨️ Real-time typing test
+* 📊 Calculates typing speed in WPM
+* 🟢 Correct characters displayed in green
+* 🔴 Incorrect characters displayed in red
+* 🔄 Random text selection
+* ⌫ Backspace support
+* 🚪 ESC key to exit
+* 🖥️ Terminal-based interface
 
-For example, for an int:
+## 🛠️ Technologies Used
 
+* **Python 3**
+* `curses`
+* `time`
+* `random`
 
-item_id: int
-or for a more complex Item model:
+## 📂 Project Structure
 
+```text
+TYPING-SPEED-TEST/
+│
+├── main.py
+├── text.txt
+└── README.md
+```
 
-item: Item
-...and with that single declaration you get:
+## 🚀 How to Run
 
-Editor support, including:
-Completion.
-Type checks.
-Validation of data:
-Automatic and clear errors when the data is invalid.
-Validation even for deeply nested JSON objects.
-Conversion of input data: coming from the network to Python data and types. Reading from:
-JSON.
-Path parameters.
-Query parameters.
-Cookies.
-Headers.
-Forms.
-Files.
-Conversion of output data: converting from Python data and types to network data (as JSON):
-Convert Python types (str, int, float, bool, list, etc).
-datetime objects.
-UUID objects.
-Database models.
-...and many more.
-Automatic interactive API documentation, including 2 alternative user interfaces:
-Swagger UI.
-ReDoc.
-Coming back to the previous code example, FastAPI will:
+### 1. Install Python
 
-Validate that there is an item_id in the path for GET and PUT requests.
-Validate that the item_id is of type int for GET and PUT requests.
-If it is not, the client will see a useful, clear error.
-Check if there is an optional query parameter named q (as in http://127.0.0.1:8000/items/foo?q=somequery) for GET requests.
-As the q parameter is declared with = None, it is optional.
-Without the None it would be required (as is the body in the case with PUT).
-For PUT requests to /items/{item_id}, read the body as JSON:
-Check that it has a required attribute name that should be a str.
-Check that it has a required attribute price that has to be a float.
-Check that it has an optional attribute is_offer, that should be a bool, if present.
-All this would also work for deeply nested JSON objects.
-Convert from and to JSON automatically.
-Document everything with OpenAPI, that can be used by:
-Interactive documentation systems.
-Automatic client code generation systems, for many languages.
-Provide 2 interactive documentation web interfaces directly.
-We just scratched the surface, but you already get the idea of how it all works.
+Make sure Python 3 is installed.
 
-Try changing the line with:
+Check your Python version:
 
+```bash
+python --version
+```
 
-    return {"item_name": item.name, "item_id": item_id}
-...from:
+### 2. Add Text
 
+Create a file named:
 
-        ... "item_name": item.name ...
-...to:
+```text
+text.txt
+```
 
+Add one or more sentences to the file, with each passage on a separate line.
 
-        ... "item_price": item.price ...
-...and see how your editor will auto-complete the attributes and know their types:
+Example:
+
+```text
+Python is a powerful and easy to learn programming language.
+Practice typing every day to improve your speed and accuracy.
+Learning programming requires practice, patience, and consistency.
+```
+
+The program randomly selects one line from `text.txt`.
+
+### 3. Run the Program
+
+```bash
+python main.py
+```
+
+## 🎮 How to Use
+
+When the program starts, you will see:
+
+```text
+Welcome to the Speed Typing Test!
+Press any key to begin!
+```
+
+Press any key to start.
+
+The program will display a text passage. Type the displayed text as accurately and quickly as possible.
+
+Your current speed will be displayed as:
+
+```text
+WPM: 45
+```
+
+### ⌨️ Keyboard Controls
+
+| Key         | Action                        |
+| ----------- | ----------------------------- |
+| Normal keys | Type the text                 |
+| Backspace   | Delete the previous character |
+| ESC         | Exit the test                 |
+
+## 📊 WPM Calculation
+
+The program calculates WPM using the standard assumption that **5 typed characters = 1 word**.
+
+The calculation is:
+
+```python
+wpm = round((len(current_text) / (time_elapsed / 60)) / 5)
+```
+
+Where:
+
+* `len(current_text)` = number of characters typed
+* `time_elapsed` = time spent typing
+* `60` = converts seconds into minutes
+* `5` = average characters per word
+
+## 🎨 Character Feedback
+
+The program provides real-time visual feedback.
+
+### 🟢 Green
+
+The character matches the target text.
+
+### 🔴 Red
+
+The character does not match the target text.
+
+The colors are configured using:
+
+```python
+curses.init_pair(1, curses.COLOR_GREEN, curses.COLOR_BLACK)
+curses.init_pair(2, curses.COLOR_RED, curses.COLOR_BLACK)
+```
+
+## 🔄 Random Text Selection
+
+The program reads passages from `text.txt`:
+
+```python
+def load_text():
+    with open("text.txt", "r") as f:
+        lines = f.readlines()
+        return random.choice(lines).strip()
+```
+
+`random.choice()` selects a random line for each typing test.
+
+## 📚 Python Concepts Used
+
+This project demonstrates:
+
+* Functions
+* Loops
+* Lists
+* File handling
+* `random.choice()`
+* Time calculation
+* Exception handling
+* Keyboard input
+* Terminal interfaces
+* Python modules
+* Basic WPM calculation
+* Real-time screen updates
+
+## ⚠️ Platform Note
+
+This project uses Python's `curses` library, which is primarily designed for Unix-like terminals.
+
+On **Linux and macOS**, it can generally be run directly with Python.
+
+On **Windows**, the standard `curses` module is not included with Python. A compatible implementation such as `windows-curses` may be required:
+
+```bash
+pip install windows-curses
+```
+
+Then run:
+
+```bash
+python main.py
+```
+
+## 🚀 Future Improvements
+
+Possible improvements include:
+
+* 📈 Accuracy percentage
+* 🏆 High-score tracking
+* ⏱️ Timed typing modes
+* 📊 Average WPM
+* 📋 More typing passages
+* 🎯 Difficulty levels
+* 📅 Personal typing statistics
+* 🎨 Improved terminal interface
+
+## 👨‍💻 Author
+
+**Kunal Kumar**
+
+A Python learning project focused on terminal applications, keyboard input, file handling, and typing-speed calculation.
+
+---
+
+⭐ **If you found this project useful, consider giving the repository a star!**
